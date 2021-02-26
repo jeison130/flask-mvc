@@ -8,6 +8,4 @@ def productos():
 
     productos = productosModel.traerTodos()
 
-    print(productos)
-
-    return render_template('productos/index.html')
+    return render_template('productos/index.html', productos = productos)
