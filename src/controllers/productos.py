@@ -1,3 +1,4 @@
+from flask import render_template
 from src import app
 from src.models.productos import ProductosModel
 
@@ -9,4 +10,4 @@ def productos():
 
     print(productos)
 
-    return 'En productos'
+    return render_template('productos/index.html')
