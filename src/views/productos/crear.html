@@ -1,4 +1,7 @@
-{% extends 'layouts/base.html' %} {% block titulo %} Crear Productos {% endblock %} {% block contenido %}
+{% extends 'layouts/base.html' %} 
+{% block titulo %} Crear Productos {% endblock %} 
+
+{% block contenido %}
 <h1>Craer Productos</h1>
 <a href="{{ url_for('productos') }}">volver</a>
 
@@ -26,6 +29,11 @@
     </div>
 
     <div class="mb-3">
+        <label for="ganancia">Ganancia (%)</label>
+        <input type="number" required class="form-control" id="ganancia" name="ganancia">
+    </div>
+
+    <div class="mb-3">
         <label for="estado">Estado de producto</label>
         <select class="form-select" required id="estado" name="estado">
             <option selected value="">Selecione una opción</option>
@@ -37,6 +45,33 @@
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
 
+<script>
+    let inputPrecioCompra = document.querySelector('#precio_compra')
+    let inputPrecioVenta = document.querySelector('#precio_venta')
+    let inputGanancia = document.getElementById('ganancia')
+    
+    inputPrecioCompra.addEventListener('change', cambioPrecioCompra)
+    function cambioPrecioCompra(e){
+        console.log('Cambiando precio compra')
+    }
 
+    inputPrecioVenta.addEventListener('change', cambioPrecioVenta)
+    function cambioPrecioVenta(e){
+        // Esta cambiando el precio venta
+        // ganancia = (precio_venta / precio_compra) / 100
+        let precio_venta = parseInt(inputPrecioVenta.value)
+        let precio_compra = parseInt(inputPrecioCompra.value)
+        let ganancia = ((precio_venta - precio_compra)/ precio_compra) * 100
+        inputGanancia.value = ganancia
+    }
 
+    inputGanancia.addEventListener('change', cambioGanancia)
+    function cambioGanancia(e){
+        let precio_compra = parseInt(inputPrecioCompra.value)
+        let ganancia = parseInt(inputGanancia.value)
+        let precio_venta = (precio_compra * (ganancia/100)) + precio_compra
+        inputPrecioVenta.value = precio_venta
+    }
+
+</script>
 {% endblock%}
